@@ -119,9 +119,10 @@ async def process_document(
 
 async def _extract_from_url(url: str, request_id: str, start_time: float) -> BLResponse:
     try:
-        resp = httpx.get(url, timeout=30.0, follow_redirects=True)
-        resp.raise_for_status()
-        content = resp.content
+        async with httpx.AsyncClient() as client:
+            resp = await client.get(url, timeout=30.0, follow_redirects=True)
+            resp.raise_for_status()
+            content = resp.content
     except httpx.TimeoutException:
         raise HTTPException(
             status_code=408,
@@ -132,6 +133,8 @@ async def _extract_from_url(url: str, request_id: str, start_time: float) -> BLR
                 "timestamp": datetime.now(timezone.utc).isoformat(),
             },
         )
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(
             status_code=422,
