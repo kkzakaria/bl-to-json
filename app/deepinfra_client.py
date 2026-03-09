@@ -44,5 +44,7 @@ def call_deepinfra(image_content_blocks: list[dict]) -> dict:
         max_tokens=2048,
         temperature=0.1,
     )
+    if not response.choices or not response.choices[0].message.content:
+        return {}
     raw = response.choices[0].message.content
     return parse_llm_response(raw)

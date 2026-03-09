@@ -171,7 +171,18 @@ async def extract(
             return await _extract_from_url(str(url), request_id, start_time)
 
     elif "application/json" in content_type:
-        body = await request.json()
+        try:
+            body = await request.json()
+        except Exception:
+            raise HTTPException(
+                status_code=422,
+                detail={
+                    "error": "INVALID_INPUT",
+                    "message": "Invalid JSON body.",
+                    "request_id": request_id,
+                    "timestamp": datetime.now(timezone.utc).isoformat(),
+                },
+            )
         url = body.get("url")
         if url:
             return await _extract_from_url(str(url), request_id, start_time)

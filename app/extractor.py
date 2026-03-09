@@ -25,6 +25,8 @@ def pdf_to_images(pdf_bytes: bytes) -> list[bytes]:
 def resize_image(image_bytes: bytes) -> bytes:
     """Resize image to max 1920px width if larger, preserving aspect ratio."""
     img = Image.open(io.BytesIO(image_bytes))
+    if img.mode in ("RGBA", "P", "LA"):
+        img = img.convert("RGB")
     if img.width > MAX_WIDTH:
         ratio = MAX_WIDTH / img.width
         new_size = (MAX_WIDTH, int(img.height * ratio))
