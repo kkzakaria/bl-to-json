@@ -36,5 +36,5 @@ def test_call_deepinfra_calls_api():
         assert result["bl_number"] == "TEST123"
         mock_client.chat.completions.create.assert_called_once()
         call_kwargs = mock_client.chat.completions.create.call_args[1]
-        assert call_kwargs["model"] == "google/gemma-3-27b-it"
+        assert call_kwargs["model"] == "mistralai/Mistral-Small-3.2-24B-Instruct-2506"
         assert call_kwargs["temperature"] == 0.1

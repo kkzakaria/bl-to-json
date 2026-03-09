@@ -16,6 +16,11 @@
 - Branch protection requires `--input -` with JSON heredoc (not `--field` for nested objects)
 - Set secrets: `gh secret set KEY --repo owner/repo --body "value"`
 
+## Model
+- Active model: `mistralai/Mistral-Small-3.2-24B-Instruct-2506` (changed from gemma-3-27b-it after benchmark)
+- Benchmark result: Mistral 3x faster (~8s vs 26s), better accuracy on containers, POD, vessel name
+- Model defined in `app/deepinfra_client.py` (MODEL constant) and hardcoded in `app/main.py` metadata
+
 ## Deployment
 - Docker image: `docker.io/kkzakaria/bl-to-json:latest`
 - CI/CD: GitHub Actions → Docker Hub → Render deploy hook

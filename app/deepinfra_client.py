@@ -7,7 +7,7 @@ from app.prompts import BL_EXTRACTION_PROMPT
 
 
 DEEPINFRA_BASE_URL = "https://api.deepinfra.com/v1/openai"
-MODEL = "google/gemma-3-27b-it"
+MODEL = "mistralai/Mistral-Small-3.2-24B-Instruct-2506"
 
 
 def get_client() -> OpenAI:
