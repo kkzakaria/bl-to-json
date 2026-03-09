@@ -172,6 +172,17 @@ DEEPINFRA_API_KEY=dummy APP_API_KEY=dummy pytest -v
 - `APP_API_KEY`
 - `MAX_FILE_SIZE_MB` (default: 20)
 
+## Extraction Notes
+
+The extraction prompt applies these rules for accuracy:
+
+- **Carrier** — company name only, strips label prefixes ("Carrier:", "Shipped by:", etc.)
+- **Vessel vs Voyage** — treated as distinct fields; handles Maersk "VOYAGE / VESSEL NAME" layout correctly
+- **Container number** — ISO format only (4 letters + 7 digits, e.g. `MSCU1234567`); trailing suffixes (`/ CN`, `ML-CN`) are removed
+- **Description of goods** — cargo description only; boilerplate clauses ("SHIPPER'S LOAD AND COUNT", "OCEAN FREIGHT PREPAID", "SAID TO CONTAIN", etc.) are ignored
+- **Total weight / volume** — uses explicit grand total if present, otherwise computed by summing per-container values
+- **Port of discharge** — checks for "Port of Discharge", "POD", "Destination Port", and "Place of Delivery" labels
+
 ## Stack
 
 - [FastAPI](https://fastapi.tiangolo.com/) + Uvicorn

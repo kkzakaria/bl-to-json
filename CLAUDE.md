@@ -21,6 +21,10 @@
 - Benchmark result: Mistral 3x faster (~8s vs 26s), better accuracy on containers, POD, vessel name
 - Model defined in `app/deepinfra_client.py` (MODEL constant) and hardcoded in `app/main.py` metadata
 
+## Prompt
+- File: `app/prompts.py` — `BL_EXTRACTION_PROMPT`
+- Key extraction rules added: carrier (strip label prefix), vessel vs voyage (distinct fields, Maersk "VOYAGE / VESSEL" layout), container number (ISO format only: 4 letters + 7 digits), description_of_goods (ignore boilerplate like "SHIPPER'S LOAD AND COUNT"), total_weight/volume (compute from containers if no explicit total), port_of_discharge (check POD / Destination Port / Place of Delivery labels)
+
 ## Deployment
 - Docker image: `docker.io/kkzakaria/bl-to-json:latest`
 - CI/CD: GitHub Actions → Docker Hub → Render deploy hook
