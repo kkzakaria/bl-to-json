@@ -47,7 +47,11 @@ Return a JSON object with EXACTLY this structure (use null for any field not fou
 - `voyage` = the voyage/trip number (e.g. "450W", "044W", "0102W") — typically alphanumeric, often ends in W or E
 - On some layouts (e.g. Maersk) the format is "VOYAGE / VESSEL NAME" — read carefully.
 
-**container number**: Extract only the ISO container number (4 letters + 7 digits, e.g. "MSCU1234567"). Remove any trailing suffixes like "/ CN", "ML-CN", booking references, or seal numbers.
+**container number**: Extract only the ISO container number (4 letters + 7 digits, e.g. "MSCU1234567"). Remove any trailing suffixes like "/ CN", "ML-CN", booking references, or seal numbers that follow immediately after the container number.
+
+**container type**: Extract the exact equipment type as printed (e.g. "20GP", "40GP", "40HC", "40HQ", "45HC"). It typically appears in the description section as "1X40HC CONTAINER SAID TO CONTAIN" or on the container line. Note: 40HQ and 40HC refer to the same physical container (40-foot High Cube) but use different carrier notations — extract whichever is explicitly stated in the description section; if absent, use the type from the container number line.
+
+**seal**: The seal number often appears on the same line as or immediately after the container number (e.g. "MSCU1234567 SEAL: CNDA46721" or "MSCU1234567 / CNDA46721"). Extract it into the `seal` field, not the container number field.
 
 **description_of_goods**: Extract the actual cargo description (e.g. "MOTORCYCLES AND PARTS", "SOLAR LAMPS AND BRAKE PADS"). Ignore legal/freight clauses such as "SHIPPER'S LOAD AND COUNT", "OCEAN FREIGHT PREPAID", "SAID TO CONTAIN", "DESTINATION CHARGES COLLECT", or any other standard boilerplate text.
 
