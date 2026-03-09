@@ -1,6 +1,6 @@
 # BL-to-JSON
 
-Extracts structured data from **Bill of Lading** documents (PDF or image) using the `google/gemma-3-27b-it` vision model via [DeepInfra](https://deepinfra.com).
+Extracts structured data from **Bill of Lading** documents (PDF or image) using the `mistralai/Mistral-Small-3.2-24B-Instruct-2506` model via [DeepInfra](https://deepinfra.com).
 
 ## Features
 
@@ -87,7 +87,7 @@ curl -X POST https://your-service.onrender.com/extract \
     "request_id": "550e8400-e29b-41d4-a716-446655440000",
     "timestamp": "2026-03-09T14:32:00Z",
     "processing_time_ms": 3420,
-    "model": "google/gemma-3-27b-it",
+    "model": "mistralai/Mistral-Small-3.2-24B-Instruct-2506",
     "source_type": "upload",
     "source_filename": "bl.pdf",
     "source_url": null,
@@ -179,4 +179,4 @@ DEEPINFRA_API_KEY=dummy APP_API_KEY=dummy pytest -v
 - [Pillow](https://pillow.readthedocs.io/) — image resizing
 - [openai](https://github.com/openai/openai-python) SDK — DeepInfra compatible
 - [Pydantic v2](https://docs.pydantic.dev/) — schema validation
-- `google/gemma-3-27b-it` via [DeepInfra](https://deepinfra.com/google/gemma-3-27b-it)
+- `mistralai/Mistral-Small-3.2-24B-Instruct-2506` via [DeepInfra](https://deepinfra.com/mistralai/Mistral-Small-3.2-24B-Instruct-2506) — chosen for best accuracy + speed after benchmarking vs Gemma-3-27B and Qwen3-VL-235B

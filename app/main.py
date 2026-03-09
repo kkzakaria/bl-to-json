@@ -106,7 +106,7 @@ async def process_document(
         request_id=request_id,
         timestamp=datetime.now(timezone.utc).isoformat(),
         processing_time_ms=elapsed_ms,
-        model="google/gemma-3-27b-it",
+        model="mistralai/Mistral-Small-3.2-24B-Instruct-2506",
         source_type=source_type,
         source_filename=filename if source_type == "upload" else None,
         source_url=source_url,
