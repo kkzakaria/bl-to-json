@@ -1,4 +1,5 @@
 from __future__ import annotations
+import asyncio
 import uuid
 import time
 from datetime import datetime, timezone
@@ -88,7 +89,7 @@ async def process_document(
     image_blocks = build_image_messages(images)
 
     try:
-        extracted = call_deepinfra(image_blocks)
+        extracted = await asyncio.to_thread(call_deepinfra, image_blocks)
     except Exception as e:
         raise HTTPException(
             status_code=502,
