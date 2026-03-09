@@ -4,7 +4,7 @@ Return a JSON object with EXACTLY this structure (use null for any field not fou
 
 {
   "bl_number": "string or null",
-  "bl_type": "Original | Seaway Bill | Express BL | Surrender | null",
+  "bl_type": "Original | Seaway Bill | Express BL | Surrender | Draft | null",
   "carrier": "string or null",
   "shipper": {
     "name": "string or null",
@@ -60,6 +60,16 @@ Return a JSON object with EXACTLY this structure (use null for any field not fou
 **total_weight / total_volume**: If a grand total is explicitly stated on the document, use it. If not, compute it by summing the individual container weights/volumes. Do not leave null if the per-container values are available.
 
 **port_of_discharge**: Look for fields labeled "Port of Discharge", "POD", "Destination Port", or "Place of Delivery". Do not leave null if any destination port is visible.
+
+**bl_type**: Look for the document type both in text fields AND visually as a watermark or stamp overlaid on the document image.
+- "Original" = negotiable BL with signed originals issued (number of originals > 0)
+- "Seaway Bill" = non-negotiable, no originals issued
+- "Express BL" = electronic release
+- "Surrender" = telex release / surrendered
+- "Draft" = document not yet officially issued; look for the word "DRAFT" printed diagonally or as a large watermark across the page — this takes absolute priority over everything else
+IMPORTANT: If you can visually see the word "DRAFT" stamped or printed as a large overlay/watermark anywhere on the page, set bl_type to "Draft" regardless of any other text. Also: if "Number of original B/Ls" is explicitly Zero (0), do NOT set bl_type to "Original".
+
+**containers (partial extraction)**: Always create a container entry for each container found, even if some fields (number, type, seal) are missing or not printed on the document. Extract weight and volume if they are visible even when the container number is absent. Never null out the entire container object just because the number is missing.
 
 **confidence**:
 - "high" = 10+ fields extracted successfully
